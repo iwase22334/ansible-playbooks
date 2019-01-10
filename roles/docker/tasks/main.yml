@@ -1,0 +1,48 @@
+---
+- name: Install dependencies
+  yum: name={{ item }}
+  become: true
+  with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+
+- name: Add docker repo
+  shell: "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+  args:
+    chdir: "/etc/yum.repos.d"
+    creates: docker-ce.repo
+
+- name: Install docker
+  yum: name=docker-ce
+  become: true
+
+- name: Ensure 'docker' group exists
+  become: yes
+  group:
+    name: docker
+  tags: id
+
+- name: "Add '{{ ansible_user }}' user to 'docker' group."
+  become: yes
+  user:
+    name: "{{ ansible_user }}"
+    groups:
+      - docker
+    append: yes
+
+- name: Take the newly added 'docker' group into account
+  meta: reset_connection
+
+- name: Register current user's id
+  shell: id
+  register: id
+
+- debug: var=id
+
+- name: Restart docker
+  systemd:
+    name: docker.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
