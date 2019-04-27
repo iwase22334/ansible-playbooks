@@ -9,6 +9,7 @@
 
 - name: Add docker repo
   shell: "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+  become: true
   args:
     chdir: "/etc/yum.repos.d"
     creates: docker-ce.repo
@@ -17,32 +18,24 @@
   yum: name=docker-ce
   become: true
 
-- name: Ensure 'docker' group exists
-  become: yes
-  group:
-    name: docker
-  tags: id
-
-- name: "Add '{{ ansible_user }}' user to 'docker' group."
-  become: yes
-  user:
-    name: "{{ ansible_user }}"
-    groups:
-      - docker
-    append: yes
-
-- name: Take the newly added 'docker' group into account
-  meta: reset_connection
-
-- name: Register current user's id
-  shell: id
-  register: id
-
-- debug: var=id
-
 - name: Restart docker
   systemd:
     name: docker.service
     state: restarted
     daemon_reload: yes
     enabled: yes
+  become: true
+
+- name: Get docker-compose
+  get_url: 
+    url: "https://github.com/docker/compose/releases/download/1.5.1/docker-compose-{{ansible_system}}-{{ansible_machine}}"
+    dest: /usr/local/bin/docker-compose
+  register: get_compose
+  become: true
+
+- name: Add authority
+  file:
+    path: /usr/local/bin/docker-compose
+    mode: "a+x"
+  when: get_compose.changed
+  become: true
