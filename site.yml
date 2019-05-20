@@ -1,4 +1,11 @@
 ---
-- hosts: all
+
+- hosts: ubuntu18 
   roles: 
-    - docker
+    - devtools-ubuntu18
+    - docker-ubuntu18
+
+- hosts: centos7
+  roles: 
+    - docker-centos7
+

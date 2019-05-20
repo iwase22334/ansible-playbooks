@@ -1,0 +1,6 @@
+---
+- name: install development tools
+  apt:
+    pkg: [ 'zsh', 'tree' ]
+    state: latest
+  become: yes
