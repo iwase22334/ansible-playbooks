@@ -1,6 +1,6 @@
 ---
 - name: install development tools
   apt:
-    pkg: [ 'zsh', 'tree' ]
+    pkg: [ 'zsh', 'tree', 'libboost-all-dev']
     state: latest
   become: yes

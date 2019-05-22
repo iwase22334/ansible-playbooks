@@ -3,9 +3,11 @@
 - hosts: ubuntu18 
   roles: 
     - devtools-ubuntu18
+    - devtools
     - docker-ubuntu18
 
 - hosts: centos7
   roles: 
     - docker-centos7
+    - devtools
 
