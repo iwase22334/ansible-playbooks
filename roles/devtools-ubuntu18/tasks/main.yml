@@ -1,6 +1,6 @@
 ---
 - name: install development tools
   apt:
-    pkg: [ 'zsh', 'tree', 'libboost-all-dev']
+    pkg: [ 'zsh', 'tree', 'build-essential', 'cmake', 'libboost-all-dev']
     state: latest
   become: yes
