@@ -1,6 +1,12 @@
 ---
 - name: install development tools
   apt:
-    pkg: [ 'zsh', 'tree', 'build-essential', 'cmake', 'libboost-all-dev']
+    pkg: [ 'zsh', 'tree', 'build-essential',  'ctags', 'cmake', 'clang', 'clang-format']
+    state: latest
+  become: yes
+
+- name: install libs
+  apt:
+    pkg: [ 'libboost-all-dev', 'libpq-dev', 'libpqxx-dev']
     state: latest
   become: yes
