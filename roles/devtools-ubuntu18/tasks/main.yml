@@ -1,12 +1,24 @@
 ---
 - name: install development tools
   apt:
-    pkg: [ 'zsh', 'tree', 'build-essential',  'ctags', 'cmake', 'clang', 'clang-format']
+    pkg: [ 'zsh', 'tree', 'build-essential' ]
+    state: latest
+  become: yes
+
+- name: install c++ development tools
+  apt:
+    pkg: [ 'cmake', 'clang', 'clang-format', 'cppcheck' ]
     state: latest
   become: yes
 
 - name: install libs
   apt:
     pkg: [ 'libboost-all-dev', 'libpq-dev', 'libpqxx-dev']
+    state: latest
+  become: yes
+
+- name: install python tools
+  apt:
+    pkg: [ 'python3-pip' ]
     state: latest
   become: yes

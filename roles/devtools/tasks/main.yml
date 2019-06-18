@@ -8,3 +8,13 @@
 - name: Install fzf
   shell: ~/.fzf/install
   when: fzf_clone.changed
+
+- name: Clone fasd
+  git:
+    repo: https://github.com/clvv/fasd.git
+    dest: ~/.fasd
+  register: fasd_clone
+
+- name: Install fasd
+  shell: ( cd ~/.fasd ; PREFIX=$HOME/.fasd make install; ) ;
+  when: fasd_clone.changed
