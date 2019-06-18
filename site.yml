@@ -4,6 +4,7 @@
   roles: 
     - devtools-ubuntu18
     - devtools
+    - python-keras
     - docker-ubuntu18
 
 - hosts: centos7
