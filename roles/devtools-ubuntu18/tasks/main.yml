@@ -22,3 +22,11 @@
     pkg: [ 'python3-pip' ]
     state: latest
   become: yes
+
+- name: install pip tools
+  pip:
+    name: 
+      - psycopg2
+      - tdqm
+    executable: pip3
+  become: yes
