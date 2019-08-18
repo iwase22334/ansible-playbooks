@@ -17,6 +17,12 @@
     state: latest
   become: yes
 
+- name: install document toosl
+  apt:
+    pkg: [ 'graphviz', 'imagemagick' ]
+    state: latest
+  become: yes
+
 - name: install python tools
   apt:
     pkg: [ 'python3-pip' ]
@@ -28,5 +34,6 @@
     name: 
       - psycopg2
       - tdqm
+      - pydot
     executable: pip3
   become: yes
